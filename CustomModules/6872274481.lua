@@ -9789,71 +9789,94 @@ run(function()
 
 end)
 
-local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Workspace = game:GetService("Workspace")
-local objs = game:GetObjects("rbxassetid://103361938168831")
-local import = objs[1]
-import.Parent = game:GetService("ReplicatedStorage")
-index = {
-    {
-        name = "Wood_Sword",
-        offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
-        model = import:WaitForChild("Wood_Sword"),
-    },
-    {
-        name = "Stone_Sword",
-        offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
-        model = import:WaitForChild("Stone_Sword"),
-    },
-    {
-        name = "Iron_Sword",
-        offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
-        model = import:WaitForChild("Iron_Sword"),
-    },
-    {
-        name = "Diamond_Sword",
-        offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
-        model = import:WaitForChild("Diamond_Sword"),
-    },
-    {
-        name = "Emerald_Sword",
-        offset = CFrame.Angles(math.rad(0),math.rad(-100),math.rad(-90)),
-        model = import:WaitForChild("Emerald_Sword"),
-    }
-  
-}
-local func = Workspace:WaitForChild("Camera").Viewmodel.ChildAdded:Connect(function(tool)
-    if(not tool:IsA("Accessory")) then return end
-    for i,v in pairs(index) do
-        if(v.name == tool.Name) then
-            for i,v in pairs(tool:GetDescendants()) do
-                if(v:IsA("Part") or v:IsA("MeshPart") or v:IsA("UnionOperation")) then
-                    v.Transparency = 1
-                end
-            end
-            local model = v.model:Clone()
-            model.CFrame = tool:WaitForChild("Handle").CFrame * v.offset
-            model.CFrame *= CFrame.Angles(math.rad(0),math.rad(-50),math.rad(0))
-            model.Parent = tool
-            local weld = Instance.new("WeldConstraint",model)
-            weld.Part0 = model
-            weld.Part1 = tool:WaitForChild("Handle")
-            local tool2 = Players.LocalPlayer.Character:WaitForChild(tool.Name)
-            for i,v in pairs(tool2:GetDescendants()) do
-                if(v:IsA("Part") or v:IsA("MeshPart") or v:IsA("UnionOperation")) then
-                    v.Transparency = 1
-                end
-            end
-            local model2 = v.model:Clone()
-            model2.Anchored = false
-            model2.CFrame = tool2:WaitForChild("Handle").CFrame * v.offset
-            model2.CFrame *= CFrame.Angles(math.rad(0),math.rad(-50),math.rad(0))
-            model2.CFrame *= CFrame.new(.7,0,-.8)
-            model2.Parent = tool2
-            local weld2 = Instance.new("WeldConstraint",model)
-            weld2.Part0 = model2
-            weld2.Part1 = tool2:WaitForChild("Handle")
+run(function()
+    local transformed = false
+    local CustomPacks = {Enabled = false}
+    local PackSelection = {Value = "VioletDreams"}
+
+    local packfunctions = {
+        VioletDreams = function() 
+            task.spawn(function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/OcassionalTrollage/WeDoNOTEnjoyTrolling/main/VioletsDreams.lua"))()   
+            end)
+        end,
+        
+        PastaaWare = function() 
+            task.spawn(function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/OcassionalTrollage/WeDoNOTEnjoyTrolling/main/Enlightened.lua"))()   
+            end)
+        end,
+
+        Wichtiger = function() 
+            task.spawn(function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/OcassionalTrollage/WeDoNOTEnjoyTrolling/main/Wichtiger.lua"))()   
+            end)
+        end,
+
+        Fury = function() 
+            task.spawn(function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/OcassionalTrollage/WeDoNOTEnjoyTrolling/main/Fury-16X.lua"))()   
+            end)
+        end,
+
+        
+        Onyx = function() 
+            task.spawn(function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/OcassionalTrollage/WeDoNOTEnjoyTrolling/main/Onyx.lua"))()   
+            end)
+        end,
+
+        Makima = function() 
+            task.spawn(function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/OcassionalTrollage/WeDoNOTEnjoyTrolling/main/Makima.lua"))()   
+            end)
+        end,
+
+		Marin = function() 
+			task.spawn(function()
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/OcassionalTrollage/WeDoNOTEnjoyTrolling/main/Marin-Kitsawaba.lua"))()   
+			end)
+		end,
+
+        Prime = function() 
+            task.spawn(function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/OcassionalTrollage/WeDoNOTEnjoyTrolling/main/Prime.lua"))()   
+            end)
+        end,
+
+
+        MidnightCottonCandy = function() 
+            task.spawn(function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/OcassionalTrollage/WeDoNOTEnjoyTrolling/main/MidnightCottonCandy.lua"))()   
+            end)
+        end,
+
+        Inferno = function() 
+            task.spawn(function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/NotLithix/CatV5/main/Texture%20Pack"))()   
+            end)
         end
-    end
+    }
+
+    CustomPacks = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+        ["Name"] = "CustomPacks",
+        ["Function"] = function(callback) 
+            if callback then 
+                if not transformed then
+                    transformed = true
+                    packfunctions[PackSelection["Value"]]()
+                end
+            else
+                warningNotification("TexturePacks", "Pack disabled next game.", 10)
+            end
+        end,
+        ["ExtraText"] = function()
+            return PackSelection["Value"]
+        end
+    })
+    PackSelection = CustomPacks.CreateDropdown({
+        ["Name"] = "Pack",
+        ["Function"] = function() end,
+        ["List"] = {"VioletDreams", "PastaaWare", "Onyx", "Fury", "Wichtiger", "Makima", "Marin", "Prime", "MidnightCottonCandy", "Inferno"}
+    })
 end)
