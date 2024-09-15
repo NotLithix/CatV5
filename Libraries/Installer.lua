@@ -2,7 +2,7 @@ local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/R
 local cloneref = cloneref or function(instance) return instance end
 local baseDirectory = (shared.VapePrivate and "vapeprivate" or shared.catvape and 'catvape' or "vape")
 local httpservice = cloneref(game.GetService(game, 'HttpService'))
-local API = loadstring(game:HttpGet("https://raw.githubusercontent.com/qwertyui-is-back/CatV5/main/Libraries/API.lua", true))()
+local API = loadstring(game:HttpGet("https://raw.githubusercontent.com/NotLithix/CatV5/main/Libraries/API.lua", true))()
 
 local function WriteFiles(link) -- main, libraries, games, assets
     local files = "/"..link
